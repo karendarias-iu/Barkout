@@ -1,13 +1,16 @@
 package view;
 
+import model.Entity;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class GameIntro {
     //Variables titulo del juego (Barkout)
 
     //posicion inicial en y
     private int positionTitleY = 300;
-    //nombre
+    //nombre del juego
     private String titleName = "Barkout";
     //tamaño de texto
     private int fontSize = 95;
@@ -29,11 +32,16 @@ public class GameIntro {
 
     //variable punto de referencia para el texto de los autores
     private int posYAuthorsText = 600;
+    private int posLogo = posYAuthorsText+360;
+
+    //logo
+    private BufferedImage logo;
 
     //Constructor del GameIntro
     public GameIntro(){
         //almacena el tiempo en ms una vez se llame GameIntro
         initialTime = System.nanoTime();
+        logo = Entity.uploadImage("logo_uam.png");
     }
 
     /**
@@ -72,8 +80,9 @@ public class GameIntro {
                 }
                 break;
             case 3:
-                if((posYAuthorsText+190)>=0){
+                if(posLogo>=0){
                     posYAuthorsText-=2;
+                    posLogo = posYAuthorsText + 360;
                 }else{
                     introEnded = true;
                 }
@@ -98,12 +107,18 @@ public class GameIntro {
         if(animationPhase>=1){
             if(animationPhase<3){
                 dibujarCentrado(g2d,titleName,800,positionTitleY);
-            }else{
+            }else if(animationPhase==3){
                 dibujarCentrado(g2d,"Autores",800,posYAuthorsText);
                 g2d.setFont(new Font("Courier New", Font.BOLD, fontSize-20));
                 dibujarCentrado(g2d,"Karen Daiana Arias Cardona",800,posYAuthorsText+60);
                 dibujarCentrado(g2d,"John Ever Arredondo Raigosa",800,posYAuthorsText+120);
                 dibujarCentrado(g2d,"Juan Manuel Galeano",800,posYAuthorsText+180);
+                g2d.setFont(new Font("Courier New", Font.BOLD, fontSize-10));
+                dibujarCentrado(g2d,"Programacion Orientada",800,posYAuthorsText+300);
+                dibujarCentrado(g2d,"a objetos",800,posYAuthorsText+340);
+                if(logo!=null){
+                    g2d.drawImage(logo,200,posLogo,null);
+                }
             }
         }
     }
