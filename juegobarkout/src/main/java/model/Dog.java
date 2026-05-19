@@ -3,7 +3,8 @@ package model;
 public class Dog extends Entity {
     private int health;
     public String direction = "abajo";
-    public boolean moving = false; // Nueva variable
+    public boolean moving = false;
+    private boolean superPowered = false;
 
     public Dog(int x, int y) {
         super(x, y, 50, 50, 6);
@@ -18,8 +19,10 @@ public class Dog extends Entity {
         else if (dy > 0) direction = "abajo";
         else if (dy < 0) direction = "arriba";
 
-        x += dx * speed;
-        y += dy * speed;
+        int currentSpeed = superPowered ? speed * 2 : speed;
+
+        x += dx * currentSpeed;
+        y += dy * currentSpeed;
 
         if (x < 0) x = 0;
         if (x > 750) x = 750;
@@ -33,5 +36,17 @@ public class Dog extends Entity {
 
     public void loseHealth() {
         this.health--;
+    }
+
+    public void recoverHealth() {
+        if (this.health < 5) this.health++;
+    }
+
+    public boolean isSuperPowered() {
+        return superPowered;
+    }
+
+    public void setSuperPowered(boolean superPowered) {
+        this.superPowered = superPowered;
     }
 }

@@ -26,18 +26,14 @@ public class Squirrel extends Entity {
         int diffX = targetX - x;
         int diffY = targetY - y;
 
-
         if (Math.abs(diffX) > Math.abs(diffY)) {
-            if (diffX > 0) direction = "derecha";
-            else direction = "izquierda";
+            direction = (diffX > 0) ? "derecha" : "izquierda";
         } else {
-            if (diffY > 0) direction = "abajo";
-            else direction = "arriba";
+            direction = (diffY > 0) ? "abajo" : "arriba";
         }
 
         if (x < targetX) x += speed;
         else if (x > targetX) x -= speed;
-
         if (y < targetY) y += speed;
         else if (y > targetY) y -= speed;
     }

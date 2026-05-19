@@ -3,11 +3,13 @@ package view;
 import javax.swing.*;
 
 public class GameWindow extends JFrame {
-    public GameWindow(){
+    private GamePanel panel = new GamePanel(this);
+
+    public GameWindow() {
         setTitle("Barkout");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        add(new GamePanel());
+        add(panel);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
