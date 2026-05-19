@@ -12,17 +12,20 @@ public class PlayPanel extends JPanel {
     private Animation dogAnim;
     private Animation squirrelAnim;
     private BufferedImage ballImg;
-
-    public PlayPanel(GameController controller) {
+    private String character;
+    public PlayPanel(GameController controller,String character) {
         this.controller = controller;
+        this.character = character;
         setPreferredSize(new Dimension(800, 600));
-
-        dogAnim = new Animation("perro/lucas");
         squirrelAnim = new Animation("ardilla");
     }
 
-    public void drawGame(Graphics2D g2d) {
+    public void loadCharacter(String characterName){
+        character = characterName;
+        dogAnim = new Animation("perro/"+character);
+    }
 
+    public void drawGame(Graphics2D g2d) {
         g2d.setColor(new Color(34, 139, 34));
         g2d.fillRect(0, 0, 800, 600);
 

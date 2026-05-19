@@ -3,6 +3,8 @@ package controller;
 import model.Ball;
 import model.Dog;
 import model.Squirrel;
+import view.GameMenu;
+import view.GamePanel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -22,7 +24,13 @@ public class GameController extends KeyAdapter {
     private int score = 0;
     private boolean gameOver = false;
 
-    public GameController() {
+    private GamePanel panel;
+    private GameMenu menu;
+
+    public GameController(GamePanel panel,GameMenu menu) {
+        this.panel = panel;
+        this.menu = menu;
+        panel.addKeyListener(new InputHandler(menu,panel));
         restartGame();
     }
 

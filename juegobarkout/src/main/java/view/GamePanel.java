@@ -4,8 +4,6 @@ import controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int WIDTH = 800;
@@ -13,28 +11,23 @@ public class GamePanel extends JPanel implements Runnable {
 
     private String gameState = "intro";
 
+    //personaje
+    private String character = "lucas";
+    private boolean cargado = false;
     private GameIntro introPanel = new GameIntro();
     private PlayPanel playPanel;
-    private GameController controller = new GameController();
+    private GameMenu menuPanel = new GameMenu();
+    private GameController controller = new GameController(this, menuPanel);
+    private GameWindow window;
 
-    public GamePanel() {
+    public GamePanel(GameWindow window) {
+        this.window = window;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setDoubleBuffered(true);
         setFocusable(true);
-
-        playPanel = new PlayPanel(controller);
+        playPanel = new PlayPanel(controller,character);
         addKeyListener(controller);
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (gameState.equals("menu") && e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    gameState = "juego";
-                }
-            }
-        });
-
         new Thread(this).start();
     }
 
@@ -48,30 +41,45 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState.equals("intro")) {
             introPanel.draw(g2d);
         } else if (gameState.equals("menu")) {
-            drawMenu(g2d);
-        } else if (gameState.equals("juego")) {
+            menuPanel.draw(g2d);
+        }
+        if (gameState.equals("game")) {
+            if(!cargado){
+                playPanel.loadCharacter(character);
+                cargado = true;
+            }
+
             playPanel.drawGame(g2d);
         }
     }
 
-    private void drawMenu(Graphics2D g2d) {
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Courier New", Font.BOLD, 40));
-        g2d.drawString("BARKOUT - MENU", 240, 200);
-        g2d.setFont(new Font("Courier New", Font.BOLD, 20));
-        g2d.drawString("Presiona ENTER para Empezar a Jugar", 180, 350);
+    public GameMenu getMenuPanel() {
+        return menuPanel;
     }
 
-    public void update() {
-        if (introPanel.isIntroEnded() && gameState.equals("intro")) {
+    public String getGameState() {
+        return gameState;
+    }
+
+
+    public void update(){
+        if(introPanel.isIntroEnded()){
             gameState = "menu";
         }
-
-        if (gameState.equals("intro")) {
+        if(gameState == "intro"){
             introPanel.update();
-        } else if (gameState.equals("juego")) {
+        }
+        if(!menuPanel.isActiveMenu()){
+            window.dispose();
+        }
+        if(menuPanel.isStartButtonSelected()){
+            character = menuPanel.getCharacter();
+            gameState = "game";
+        }
+        if(gameState.equals("game")){
             controller.updateLogic();
         }
+
     }
 
     @Override

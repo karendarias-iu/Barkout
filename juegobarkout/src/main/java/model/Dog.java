@@ -3,7 +3,7 @@ package model;
 public class Dog extends Entity {
     private int health;
     public String direction = "abajo";
-    public boolean moving = false; // Nueva variable
+    public boolean moving = false;
 
     public Dog(int x, int y) {
         super(x, y, 50, 50, 6);
