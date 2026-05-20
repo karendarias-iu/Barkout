@@ -14,3 +14,14 @@ dfd,0
 f,70
 dd,100
 Anonimo,40
+John,110
+oo,150
+john,100
+g,30
+ñ,130
+johnpi,450
+l,0
+l,0
+d,30
+gfg,60
+l},170

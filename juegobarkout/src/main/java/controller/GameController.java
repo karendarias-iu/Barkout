@@ -6,7 +6,6 @@ import model.Reward;
 import model.Squirrel;
 import view.GameMenu;
 import view.GamePanel;
-import view.SoundManager;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -80,7 +79,6 @@ public class GameController extends KeyAdapter {
         gameOver = false;
         lastSpawnTime = System.currentTimeMillis();
         lastRewardSpawnTime = System.currentTimeMillis();
-        SoundManager.playSound("inicio.wav");
     }
 
     public void updateLogic() {
@@ -109,7 +107,7 @@ public class GameController extends KeyAdapter {
             if (dog.intersects(r)) {
                 if (r.getType() == Reward.Type.BERRY) {
                     score += 30;
-                    SoundManager.playSound("colision.wav");
+                    SoundManager.playSound("bark.wav");
                 } else if (r.getType() == Reward.Type.POWER_BONE) {
                     dog.recoverHealth();
                     dog.setSuperPowered(true);
@@ -140,7 +138,7 @@ public class GameController extends KeyAdapter {
                     ball.reset();
                     score += 10;
                     squirrels.remove(i);
-                    SoundManager.playSound("colision.wav");
+                    SoundManager.playSound("angryBark.wav");
                     continue;
                 }
             }
@@ -158,7 +156,8 @@ public class GameController extends KeyAdapter {
 
     private void triggerGameOver() {
         gameOver = true;
-        SoundManager.playSound("gameover.wav");
+        SoundManager.stopLoop();
+        SoundManager.playSound("gameOver.wav");
         saveScoreToHistory(playerName, score);
     }
 

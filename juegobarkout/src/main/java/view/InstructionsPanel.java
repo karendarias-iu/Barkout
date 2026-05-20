@@ -1,18 +1,29 @@
 package view;
 
+import model.Entity;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class InstructionsPanel {
+    //Imagen de fondo de las instrucciones
+    private BufferedImage instructions;
 
-    public void draw(Graphics2D g2d) {
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Courier New", Font.BOLD, 40));
+    //Constructor por defecto
+    public InstructionsPanel(){
+        //carga la imagen de las instrucciones
+        instructions = Entity.uploadImage("instructions.jpg");
     }
 
-    private void dibujarCentrado(Graphics2D g2d, String stringText, int panelWidth, float posY) {
-        FontMetrics fm = g2d.getFontMetrics();
-        int posX = (panelWidth - fm.stringWidth(stringText)) / 2;
-        g2d.drawString(stringText, posX, posY);
+    /**
+     * Metodo para dibujar el menu
+     * @param g2d recibe el elemento en el cual se va a dibujar
+     */
+    public void draw(Graphics2D g2d) {
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //dibuja las imagen con las instrucciones
+        if(instructions!=null){
+            g2d.drawImage(instructions,0,0,null);
+        }
     }
 }

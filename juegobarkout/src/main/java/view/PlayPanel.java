@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import controller.SoundManager;
 import model.Entity;
 import model.Reward;
 import model.Squirrel;
@@ -40,6 +41,7 @@ public class PlayPanel extends JPanel {
     public void loadCharacter(String characterName) {
         this.character = characterName;
         this.dogAnim = new Animation("perro/" + character);
+        //SoundManager.playLoop("soundtrack.wav");
     }
 
     public void drawGame(Graphics2D g2d) {

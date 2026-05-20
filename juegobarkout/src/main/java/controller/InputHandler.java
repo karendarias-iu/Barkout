@@ -16,16 +16,28 @@ public class InputHandler extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e){
         int tecla = e.getKeyCode();
-        if(tecla==KeyEvent.VK_1){
-            menu.selectLucas();
-        }else if(tecla==KeyEvent.VK_2){
-            menu.selectSalchicha();
-        } else if (tecla==KeyEvent.VK_ENTER) {
-            menu.startGame();
-        } else if (tecla==KeyEvent.VK_ESCAPE) {
-            if(panel.getGameState().equals("menu")){
+        String estadoActual = panel.getGameState();
+
+        //eventos cuando se esta en estado de menu
+        if (estadoActual.equals("menu")) {
+            if(tecla == KeyEvent.VK_1){
+                menu.selectLucas();
+            } else if(tecla == KeyEvent.VK_2){
+                menu.selectSalchicha();
+            } else if (tecla == KeyEvent.VK_ENTER) {
+                menu.startGame(); // Esto cambiará el estado a "instructions" en el update de GamePanel
+            } else if (tecla == KeyEvent.VK_ESCAPE) {
                 menu.close();
                 System.exit(0);
+            }
+        } else if (estadoActual.equals("instructions")) {
+            //eventos cuando se esta en la ventana de instrucciones
+            if (tecla == KeyEvent.VK_ENTER) {
+                //dado enter se pasa al juego
+                panel.setGameState("game");
+                //se para el loop del soundtrack y se vuelve a iniciar
+                SoundManager.stopLoop();
+                SoundManager.playLoop("soundtrack.wav");
             }
         }
     }
