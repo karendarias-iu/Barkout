@@ -6,7 +6,7 @@ public class Reward extends Entity {
     private Type type;
 
     public Reward(int x, int y, Type type) {
-        super(x, y, 25, 25, 0);
+        super(x, y, 40, 40, 0);
         this.type = type;
     }
 

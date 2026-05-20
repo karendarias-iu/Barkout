@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import model.Entity;
 import model.Reward;
 import model.Squirrel;
 
@@ -13,6 +14,7 @@ public class PlayPanel extends JPanel {
     private GameController controller;
     private Animation dogAnim;
     private Animation squirrelAnim;
+    private BufferedImage background;
     private BufferedImage ballImg;
     private BufferedImage hotDogImg;
     private BufferedImage boneImg;
@@ -27,10 +29,12 @@ public class PlayPanel extends JPanel {
         setPreferredSize(new Dimension(800, 600));
 
         this.squirrelAnim = new Animation("ardilla");
-        this.ballImg = model.Entity.uploadImage("pelota.png");
+        this.ballImg = model.Entity.uploadImage("items/ball.png");
 
-        this.hotDogImg = model.Entity.uploadImage("HotDog.png");
-        this.boneImg = model.Entity.uploadImage("hueso.png");
+        this.hotDogImg = model.Entity.uploadImage("items/hotDog.png");
+        this.boneImg = model.Entity.uploadImage("items/bone.png");
+
+        this.background = Entity.uploadImage("background.png");
     }
 
     public void loadCharacter(String characterName) {
@@ -39,8 +43,7 @@ public class PlayPanel extends JPanel {
     }
 
     public void drawGame(Graphics2D g2d) {
-        g2d.setColor(grassColor);
-        g2d.fillRect(0, 0, 800, 600);
+        g2d.drawImage(background,0,0,null);
 
         for (int i = 0; i < controller.rewards.size(); i++) {
             Reward r = controller.rewards.get(i);

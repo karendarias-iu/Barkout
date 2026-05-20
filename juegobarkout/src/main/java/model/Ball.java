@@ -3,7 +3,7 @@ package model;
 public class Ball extends Entity {
 
     public Ball(int x, int y) {
-        super(x, y, 16, 16, 0);
+        super(x, y, 30, 30, 0);
     }
 
     public void reset() {
