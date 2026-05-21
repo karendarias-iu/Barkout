@@ -105,8 +105,8 @@ public class GameController extends KeyAdapter {
         for (int i = rewards.size() - 1; i >= 0; i--) {
             Reward r = rewards.get(i);
             if (dog.intersects(r)) {
-                if (r.getType() == Reward.Type.BERRY) {
-                    score += 30;
+                if (r.getType() == Reward.Type.HOT_DOG) {
+                    score += 100;
                     SoundManager.playSound("bark.wav");
                 } else if (r.getType() == Reward.Type.POWER_BONE) {
                     dog.recoverHealth();
@@ -188,7 +188,7 @@ public class GameController extends KeyAdapter {
     private void spawnReward() {
         int rx = random.nextInt(700) + 50;
         int ry = random.nextInt(500) + 50;
-        Reward.Type type = (random.nextInt(10) < 3) ? Reward.Type.POWER_BONE : Reward.Type.BERRY;
+        Reward.Type type = (random.nextInt(10) < 3) ? Reward.Type.POWER_BONE : Reward.Type.HOT_DOG;
         rewards.add(new Reward(rx, ry, type));
     }
 

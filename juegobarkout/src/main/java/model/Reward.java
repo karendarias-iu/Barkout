@@ -1,7 +1,7 @@
 package model;
 
 public class Reward extends Entity {
-    public enum Type {BERRY, POWER_BONE}
+    public enum Type {HOT_DOG, POWER_BONE}
 
     private Type type;
 

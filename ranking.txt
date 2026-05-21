@@ -25,3 +25,13 @@ l,0
 d,30
 gfg,60
 l},170
+grtgrt,240
+okop,330
+erfer,30
+ferf,110
+fergfer,340
+fer,230
+x,380
+c,1760
+karem,210
+uhio,360

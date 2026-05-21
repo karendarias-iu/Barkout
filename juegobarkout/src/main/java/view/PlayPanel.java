@@ -1,7 +1,6 @@
 package view;
 
 import controller.GameController;
-import controller.SoundManager;
 import model.Entity;
 import model.Reward;
 import model.Squirrel;
@@ -45,18 +44,19 @@ public class PlayPanel extends JPanel {
     }
 
     public void drawGame(Graphics2D g2d) {
-        g2d.drawImage(background,0,0,null);
+        g2d.drawImage(background, 0, 0, null);
 
         for (int i = 0; i < controller.rewards.size(); i++) {
             Reward r = controller.rewards.get(i);
-            BufferedImage img = (r.getType() == Reward.Type.BERRY) ? hotDogImg : boneImg;
+            BufferedImage img = (r.getType() == Reward.Type.HOT_DOG) ? hotDogImg : boneImg;
             if (img != null) {
                 g2d.drawImage(img, r.x, r.y, r.width, r.height, null);
             } else {
-                g2d.setColor((r.getType() == Reward.Type.BERRY) ? Color.RED : Color.CYAN);
+                g2d.setColor((r.getType() == Reward.Type.HOT_DOG) ? Color.RED : Color.CYAN);
                 g2d.fillOval(r.x, r.y, r.width, r.height);
             }
         }
+
 
         if (ballImg != null) {
             g2d.drawImage(ballImg, controller.ball.x, controller.ball.y,
@@ -77,11 +77,18 @@ public class PlayPanel extends JPanel {
             }
         }
 
-        for (int i = 0; i < controller.squirrels.size(); i++) {
-            Squirrel s = controller.squirrels.get(i);
-            BufferedImage sqFrame = squirrelAnim.getCurrentFrame(s.direction, true);
-            if (sqFrame != null) {
-                g2d.drawImage(sqFrame, s.x, s.y, s.width, s.height, null);
+        synchronized (controller.squirrels) {
+            for (int i = 0; i < controller.squirrels.size(); i++) {
+                Squirrel s = controller.squirrels.get(i);
+                
+                String animDirection = "izquierda";
+                if (s.direction != null && s.direction.equals("derecha")) {
+                    animDirection = "derecha";
+                }
+                BufferedImage sqFrame = squirrelAnim.getCurrentFrame(animDirection, true);
+                if (sqFrame != null) {
+                    g2d.drawImage(sqFrame, s.x, s.y, s.width, s.height, null);
+                }
             }
         }
 
