@@ -5,6 +5,9 @@ import model.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Clase instrucciones
+ */
 public class InstructionsPanel {
     //Imagen de fondo de las instrucciones
     private BufferedImage instructions;

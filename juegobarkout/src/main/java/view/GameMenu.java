@@ -5,6 +5,9 @@ import model.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Clase menu
+ */
 public class GameMenu {
     //posicion texto de seleccion de personaje en y
     private int posSelectionTitleY = 50;
@@ -46,7 +49,7 @@ public class GameMenu {
         g2d.setColor(Color.white);
         g2d.setFont(new Font("Courier New", Font.BOLD, 50));
         //dibujar texto de seleccione el personaje
-        dibujarCentrado(g2d, "Seleccione el personaje", 800, posSelectionTitleY);
+        drawCenterText(g2d, "Seleccione el personaje", 800, posSelectionTitleY);
         //dibuba las imagenes de los personajes
         if (imageMenuLucas != null && imageMenuSalchicha != null) {
             g2d.drawImage(imageMenuLucas, posLucasImageX, posImagesY, null);
@@ -64,13 +67,13 @@ public class GameMenu {
         g2d.setColor(Color.gray);
         g2d.fillRect(155, 405, 490, 50);
         g2d.setColor(Color.WHITE);
-        dibujarCentrado(g2d, "Iniciar", 800, 440);
+        drawCenterText(g2d, "Iniciar", 800, 440);
         //dibuja el boton de salir del juego
         g2d.fillRect(150, 500, 500, 60);
         g2d.setColor(Color.gray);
         g2d.fillRect(155, 505, 490, 50);
         g2d.setColor(Color.WHITE);
-        dibujarCentrado(g2d, "Salir", 800, 540);
+        drawCenterText(g2d, "Salir", 800, 540);
         g2d.setFont(new Font("Courier New", Font.BOLD, 20));
         //dibuja especificaciones de seleccion de los botones
         g2d.drawString("(Enter)", 670, 440);
@@ -84,7 +87,7 @@ public class GameMenu {
      * @param panelWidth ancho del panel
      * @param posY posicion en y donde se dibuja
      */
-    private void dibujarCentrado(Graphics2D g2d, String stringText, int panelWidth, float posY) {
+    private void drawCenterText(Graphics2D g2d, String stringText, int panelWidth, float posY) {
         FontMetrics fm = g2d.getFontMetrics();
         int posX = (panelWidth - fm.stringWidth(stringText)) / 2;
         g2d.drawString(stringText, posX, posY);

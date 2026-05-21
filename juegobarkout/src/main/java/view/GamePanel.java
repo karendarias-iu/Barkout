@@ -6,6 +6,9 @@ import controller.InputHandler;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Clase panel de juego
+ */
 public class GamePanel extends JPanel implements Runnable {
     //constantes de tamaño del panel
     private static final int WIDTH = 800;
@@ -70,54 +73,75 @@ public class GamePanel extends JPanel implements Runnable {
         //se inicia la ejecucion del hilo
         gameThread.start();
     }
-
+    //Metodo que se llama constantemente el que se realizan acciones segun sea el caso
     public void update() {
+        //si se esta en el estado de "intro"
         if (gameState.equals("intro")) {
+            //se llama el metodo update de la intro
             introPanel.update();
+            //si ha terminado la animacion de la intro pasa a menu cambiando el nombre de la variable gameState a "menu"
             if (introPanel.isIntroEnded()) {
                 gameState = "menu";
             }
         }
-
+        //si esta en el estado de "menu"
         if (gameState.equals("menu")) {
+            //una vez seleccionado el boton de "iniciar" en el menu
             if (menuPanel.isStartButtonSelected()) {
+                //se actualiza el personaje seleccionado
                 character = menuPanel.getCharacter();
+                //llama el metodo que despliega la ventana en donde se pone el nombre del jugador
                 controller.requestPlayerName();
+                //pasa a mostrar las instrucciones
                 gameState = "instructions";
             }
+            //seleccionado el boton de "salir" en el menu
             if (!menuPanel.isActiveMenu()) {
+                //cierra la ventana y el programa
                 window.dispose();
+                System.exit(0);
             }
         }
-
+        //si esta en el estado "game"
         if (gameState.equals("game")) {
+            //si no se ha cargado el personaje
             if (!isCharacterLoad) {
+                //carga el personaje solo una vez
                 playPanel.loadCharacter(character);
                 isCharacterLoad = true;
             }
+            //actualiza la logica del juego (direccion, posiciones, animaciones...)
             controller.updateLogic();
         }
     }
-
+    //Metodo para pasar a menu
     public void resetToMenu() {
+        //baja el personaje seleccionado
         this.isCharacterLoad = false;
+        //crea el menu
         this.menuPanel = new GameMenu();
-
+        //quita los eventos del teclado
         for (java.awt.event.KeyListener kl : getKeyListeners()) {
             removeKeyListener(kl);
         }
-
+        //añade nuevamente los eventos de teclado
         addKeyListener(controller);
         addKeyListener(new InputHandler(menuPanel, this));
-
+        //cambia el estado a "menu"
         this.gameState = "menu";
     }
 
+    /**
+     * Metodo propio de JPanel para dibujar
+     * @param g el elemento en donde se va a dibujar todo
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        //Hace uso de graphics2d para movimientos mas fluidos y que necesitan mas capacidad
         Graphics2D g2d = (Graphics2D) g;
 
+        //segun el estado que se encuentren se llama el metodo de dibujo para el mismo en este panel
         if (gameState.equals("intro")) {
             introPanel.draw(g2d);
         } else if (gameState.equals("menu")) {
@@ -129,27 +153,44 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Metodo run() del hilo, es lo que se ejecuta
+     */
     @Override
     public void run() {
         while (true) {
+            //se llama constantemente los metodos de update para actualizar valores y repaint para lo que es el dibujo del mismo
             update();
             repaint();
             try {
-                Thread.sleep(16); // ~60 FPS estables
+                //espera de 16ms, equivalencia a 60FPS
+                Thread.sleep(16);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Metodo que devuelve el estado del juego
+     * @return gameState estado del juego
+     */
     public String getGameState() {
         return gameState;
     }
 
+    /**
+     * Metodo para actualizar el valor del estado del juego
+     * @param gameState estado del juego
+     */
     public void setGameState(String gameState) {
         this.gameState = gameState;
     }
 
+    /**
+     * Metodo que devuelve el menu del juego
+     * @return menuPanel menu del juego
+     */
     public GameMenu getMenuPanel() {
         return menuPanel;
     }

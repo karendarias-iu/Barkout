@@ -6,6 +6,9 @@ import model.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Clase intro
+ */
 public class GameIntro {
     //nombre, posicion en y y tamaño del titulo del juego (Barkout)
     private String gameName = "Barkout";
