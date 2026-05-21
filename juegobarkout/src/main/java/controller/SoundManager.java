@@ -6,6 +6,9 @@ import javax.sound.sampled.Clip;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
+/**
+ * Clase soundManager
+ */
 public class SoundManager {
 
     // se guarda el sonido

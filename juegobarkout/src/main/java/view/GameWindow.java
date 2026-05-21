@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.*;
 
+/**
+ * Clase ventana
+ */
 public class GameWindow extends JFrame {
     //creacion del panel del juego
     private GamePanel panel = new GamePanel(this);

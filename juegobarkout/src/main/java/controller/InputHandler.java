@@ -6,16 +6,29 @@ import view.GamePanel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Clase InputHandler
+ */
 public class InputHandler extends KeyAdapter {
+    //menu
     private GameMenu menu;
+    //panel
     private GamePanel panel;
+
+    /**
+     * Constructor
+     * @param menu menu
+     * @param panel panel
+     */
     public InputHandler(GameMenu menu, GamePanel panel){
         this.menu = menu;
         this.panel = panel;
     }
+    //cuando se oprimen las teclas
     @Override
     public void keyPressed(KeyEvent e){
         int tecla = e.getKeyCode();
+        //estado del panel
         String estadoActual = panel.getGameState();
 
         //eventos cuando se esta en estado de menu
@@ -25,7 +38,7 @@ public class InputHandler extends KeyAdapter {
             } else if(tecla == KeyEvent.VK_2){
                 menu.selectSalchicha();
             } else if (tecla == KeyEvent.VK_ENTER) {
-                menu.startGame(); // Esto cambiará el estado a "instructions" en el update de GamePanel
+                menu.startGame();
             } else if (tecla == KeyEvent.VK_ESCAPE) {
                 menu.close();
                 System.exit(0);
